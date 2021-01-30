@@ -59,19 +59,19 @@
 
                      <div class="col-md-8">
                         <h5>Subtotal: </h5>
-                        <h5>Tax:</h5>
+                        <h5 >Tax:</h5>
                         <h5>Total:</h5>
                      </div>
 
                      <div class="col-md-4 status">
                         <h5 id="total">$1,278</h5>
-                        <h5>$0</h5>
-                        <h5>$1,278</h5>
+                        <h5 id="tax">$0</h5>
+                        <h5 id="total-money">$1,278</h5>
                      </div>
                   </div>
                </div>
                <div class="col-md-12 pt-4 pb-4">
-                  <button type="button" class="btn btn-success check-out">Check Out</button>
+                  <button onclick="check()" type="button" class="btn btn-success check-out">Check Out</button>
                </div>
             </div>
          </div>
@@ -83,6 +83,7 @@
    <script>
       //product-event-functionality
       function handleProduct(product,isIncrease){
+         
          var productInput=document.getElementById(product +'-count');
          var productCount=parseInt(productInput.value)
          productNewCount=productCount
@@ -106,17 +107,46 @@
          totalPrize()
 
       }
+      function count(product){
+         productInput=document.getElementById(product+'-count');
+         productCount=parseInt(productInput.value);
+         return productCount;
+
+      }
       function totalPrize(){
-         caseInput=document.getElementById('case-count');
-         caseCount=parseInt(caseInput.value);
-         phoneInput=document.getElementById('phone-count');
-         phoneCount=parseInt(phoneInput.value);
+        
+         var caseCount=count('case')
+         var phoneCount=count('phone')
+        
          var totalAmount=caseCount*59 + phoneCount*1219;
          document.getElementById('total').innerHTML=totalAmount
-
+         if(totalAmount>2000){
+            document.getElementById('tax').innerHTML="5%"
+            var tax=(totalAmount*5/100)+totalAmount;
+            document.getElementById('total-money').innerHTML=tax
+         }
+         else{
+            document.getElementById('tax').innerHTML="0%"
+            document.getElementById('total-money').innerHTML='$0'
+         }
+   
 
       }
 
+
+
+
+
+
+      function check(){
+         document.getElementById('total-money').innerHTML="$1278"
+         document.getElementById('tax').innerHTML="$0"
+         document.getElementById('total').innerHTML="$0"
+         document.getElementById('case-count').value="1"
+         document.getElementById('phone-count').value="1"
+         document.getElementById('phone-total-prize').innerHTML="$1219"
+         document.getElementById('case-total-prize').innerHTML="$59"
+      }
 
 
 
