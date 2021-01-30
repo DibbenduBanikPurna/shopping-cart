@@ -25,9 +25,9 @@
 
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button id="phone-lower" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <button onclick="handleProduct('phone',false)" class="btn btn-default"><i class="fas fa-minus"></i></button>
                            <input id="phone-count" type="text" class="form-control text-center" value="1">
-                           <button id="phone-increase" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button onclick="handleProduct('phone',true)" class="btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
                         <h5 id="phone-total-prize">$1219</h5>
                         <img src="images/remove.png" alt="" class="remove-item">
@@ -43,12 +43,12 @@
                      </div>
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button id="case-lower" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <button onclick="handleProduct('case',false)" class="btn btn-default"><i class="fas fa-minus"></i></button>
                            <input id="case-count" type="text" class="form-control text-center" value="1">
-                           <button id="case-increase" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button onclick="handleProduct('case',true)" class="btn btn-default"><i class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5 id="case-total">$59</h5>
+                        <h5 id="case-total-prize">$59</h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -64,98 +64,64 @@
                      </div>
 
                      <div class="col-md-4 status">
-                        <h5 id="total-prize">$1,278</h5>
-                        <h5>$0</h5>
                         <h5 id="total">$1,278</h5>
+                        <h5>$0</h5>
+                        <h5>$1,278</h5>
                      </div>
                   </div>
                </div>
                <div class="col-md-12 pt-4 pb-4">
-                  <button id="clear" type="button" class="btn btn-success check-out">Check Out</button>
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
                </div>
             </div>
          </div>
       </div>
    </section>
+   
 
-
-
+   <!--js-part-->
    <script>
-      //Phone-case update
-      function handleProductChange(isIncrement){
-         var caseInput=document.getElementById('case-count');
-         var caseCount=parseInt(caseInput.value)
-         let caseNewCount=caseCount
-         if(isIncrement===true){
-             caseNewCount=caseCount+1;
-
+      //product-event-functionality
+      function handleProduct(product,isIncrease){
+         var productInput=document.getElementById(product +'-count');
+         var productCount=parseInt(productInput.value)
+         productNewCount=productCount
+         if(isIncrease===true){
+             productNewCount=productCount+1;
          }
-          if(isIncrement==false && caseCount>0){
-            caseNewCount=caseCount-1;
+         if(isIncrease==false && productCount>0){
+            var productNewCount=productCount -1;
          }
         
-         caseInput.value=caseNewCount;
-         caseTotal=caseNewCount*59;
-         document.getElementById('case-total').innerHTML='$'+caseTotal
-         calculateTotal()
-      }
-      document.getElementById('case-increase').addEventListener('click',function(){
-         handleProductChange(true)
-
-
-
-      })
-      
-      document.getElementById('case-lower').addEventListener('click',function(){
-         handleProductChange(false)
-
-      })
-
-
-      //phone update
-      document.getElementById('phone-increase').addEventListener('click',function(){
-       phoneProductUpdate(true)
-        
-      })
-
-
-      document.getElementById('phone-lower').addEventListener('click',function(){
-       phoneProductUpdate(false)
-
-
-      })
-      function phoneProductUpdate(isIncrement){
-         var phoneInput=document.getElementById('phone-count');
-        var phoneCount=parseInt(phoneInput.value)
-        let phoneNewCount=phoneCount
-        if(isIncrement==true){
-          phoneNewCount=phoneCount + 1;
-
+         productInput.value=productNewCount;
+         var productPrize=document.getElementById(product+'-total-prize');
+         var productTotalPrize=0;
+        if(product=='phone'){
+          productTotalPrize=productNewCount*1219;
         }
-       if(isIncrement==false && phoneCount>0){
-         phoneNewCount=phoneCount - 1;
+         if(product=='case'){
+            var productTotalPrize=productNewCount*59;
+         }
+         productPrize.innerHTML=productTotalPrize;
+         totalPrize()
 
-       }
-        phoneInput.value=phoneNewCount;
-        var phoneTotal=phoneNewCount*1219;
-        document.getElementById('phone-total-prize').innerHTML=phoneTotal
-       calculateTotal()
       }
-      function calculateTotal(){
-        var phoneInput=document.getElementById('phone-count');
-        var phoneCount=parseInt(phoneInput.value)
-        var caseInput=document.getElementById('case-count');
-        var caseCount=parseInt(caseInput.value)
-         const totalPrize=phoneCount*1219 + caseCount*59;
-         console.log(totalPrize)
-         document.getElementById('total-prize').innerHTML='$'+totalPrize;
-         document.getElementById('total').innerHTML='$'+totalPrize
+      function totalPrize(){
+         caseInput=document.getElementById('case-count');
+         caseCount=parseInt(caseInput.value);
+         phoneInput=document.getElementById('phone-count');
+         phoneCount=parseInt(phoneInput.value);
+         var totalAmount=caseCount*59 + phoneCount*1219;
+         document.getElementById('total').innerHTML=totalAmount
+
+
       }
-      document.getElementById('clear').addEventListener('click',function(){
-         document.getElementById('total').innerHTML="0"
-         document.getElementById('total-prize').innerHTML="0"
-         
-      })
+
+
+
+
+
+    
    </script>
 </body>
 
